@@ -8,7 +8,16 @@ public class Main {
 
         // As informações são de cadastro de usuário são passadas via parâmetro
         UsuarioService.cadastrarUsuario("riachuelo", "senha123", UsuarioService.EMISSOR);
+        UsuarioService.cadastrarUsuario("admin", "admin123", UsuarioService.PAYTAL);
 
-        System.out.println(UsuarioService.retonarPorCodigo(0).toString());
+
+        // Imprime todos os usuarios
+        UsuarioService.imprimirTodos();
+
+        // Remove usuario com login "riachuelo"
+        UsuarioService.removePorLogin("riachuelo");
+
+        // Imprime novamente todos os usuarios;
+        UsuarioService.imprimirTodos();
     }
 }

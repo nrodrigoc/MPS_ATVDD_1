@@ -27,7 +27,6 @@ public class UsuarioService {
         return UsuarioRepository.retornaPorCodigo(codigo);
     }
 
-
     private static boolean loginValido(String login) throws Exception {
 
         if (login.isEmpty()) {
@@ -54,6 +53,24 @@ public class UsuarioService {
         }
 
         return true;
+    }
+
+    public static void imprimirTodos() {
+        String stringUsuarios = "[\n";
+
+        for (Usuario usr : UsuarioRepository.retornarTodos()) {
+            stringUsuarios = stringUsuarios.concat(usr.toString());
+            stringUsuarios = stringUsuarios.concat(",\n");
+        }
+
+        stringUsuarios = stringUsuarios.concat("]");
+
+        System.out.println("Lista com todos os usuarios: \n");
+        System.out.println(stringUsuarios);
+    }
+
+    public static void removePorLogin(String login) {
+        UsuarioRepository.removePorLogin(login);
     }
 
 }

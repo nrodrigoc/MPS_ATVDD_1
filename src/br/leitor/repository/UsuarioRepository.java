@@ -1,6 +1,7 @@
 package br.leitor.repository;
 
 import br.leitor.entity.Usuario;
+import com.sun.org.apache.bcel.internal.generic.FieldOrMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,18 @@ public class UsuarioRepository {
     }
 
     public static Usuario retornaPorCodigo(final long codigo) {
-        List<Usuario> filtro = usuarios.stream().filter(usr -> usr.getCodigo() == codigo).collect(Collectors.toList());
-        return filtro.get(0);
+        List<Usuario> listaFiltrada = usuarios.stream().filter(usr -> usr.getCodigo() == codigo).collect(Collectors.toList());
+        return listaFiltrada.get(0);
     }
 
+    public static List<Usuario> retornarTodos() {
+        return usuarios;
+    }
+
+    public static void removePorLogin(final String login) {
+        List<Usuario> listaFiltrada = usuarios.stream().filter(usr -> login.equals(usr.getLogin())).collect(Collectors.toList());
+        for (Usuario usr : listaFiltrada) {
+            usuarios.remove(usr);
+        }
+    }
 }
