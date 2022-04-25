@@ -1,33 +1,31 @@
-package br.leitor.repository;
+package br.leitor.infrastructure.repository;
 
-import br.leitor.entity.Usuario;
-import com.sun.org.apache.bcel.internal.generic.FieldOrMethod;
-
+import br.leitor.domain.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UsuarioRepository {
+public class UsuarioRepositorioMemoria implements UsuarioRepositorio{
 
     private static final List<Usuario> usuarios = new ArrayList<>();
 
-    public static Usuario salvar(Usuario usuario) {
+    public Usuario salvar(Usuario usuario) {
         long codigo = usuarios.size() == 0 ? 0 : usuarios.get(usuarios.size() -1 ).getCodigo() + 1;
         usuario.setCodigo(codigo);
         usuarios.add(usuario);
         return usuario;
     }
 
-    public static Usuario retornaPorCodigo(final long codigo) {
+    public Usuario retornaPorCodigo(final long codigo) {
         List<Usuario> listaFiltrada = usuarios.stream().filter(usr -> usr.getCodigo() == codigo).collect(Collectors.toList());
         return listaFiltrada.get(0);
     }
 
-    public static List<Usuario> retornarTodos() {
+    public List<Usuario> retornarTodos() {
         return usuarios;
     }
 
-    public static void removePorLogin(final String login) {
+    public void removePorLogin(final String login) {
         List<Usuario> listaFiltrada = usuarios.stream().filter(usr -> login.equals(usr.getLogin())).collect(Collectors.toList());
         for (Usuario usr : listaFiltrada) {
             usuarios.remove(usr);

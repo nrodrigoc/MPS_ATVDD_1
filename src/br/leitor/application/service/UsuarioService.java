@@ -1,16 +1,20 @@
-package br.leitor.service;
+package br.leitor.application.service;
 
 
-import br.leitor.entity.Usuario;
-import br.leitor.repository.UsuarioRepository;
+import br.leitor.domain.Usuario;
+import br.leitor.infrastructure.repository.UsuarioRepositorio;
+
+import java.util.List;
 
 public class UsuarioService {
 
-    // Tipos de usuario
-    public static final int PAYTAL = 0;
-    public static final int EMISSOR = 1;
+    private final UsuarioRepositorio usuarioRepositorio;
 
-    public static Usuario cadastrarUsuario(String login, String senha, int tipoUsuario) throws Exception {
+    public UsuarioService(UsuarioRepositorio usuarioRepositorio) {
+        this.usuarioRepositorio = usuarioRepositorio;
+    }
+
+    public Usuario cadastrarUsuario(String login, String senha, int tipoUsuario) throws Exception {
         Usuario usuario = new Usuario();
 
         if (loginValido(login))
@@ -20,11 +24,11 @@ public class UsuarioService {
 
         usuario.setTipo(tipoUsuario);
 
-        return UsuarioRepository.salvar(usuario);
+        return usuarioRepositorio.salvar(usuario);
     }
 
-    public static Usuario retonarPorCodigo(long codigo) {
-        return UsuarioRepository.retornaPorCodigo(codigo);
+    public Usuario retonarPorCodigo(long codigo) {
+        return usuarioRepositorio.retornaPorCodigo(codigo);
     }
 
     private static boolean loginValido(String login) throws Exception {
@@ -51,14 +55,15 @@ public class UsuarioService {
         }else if (senha.matches("[0-9]")) {
             throw new Exception("A senha não deve conter números!");
         }
-
         return true;
     }
 
-    public static void imprimirTodos() {
+    public void imprimirTodos() {
         String stringUsuarios = "[\n";
 
-        for (Usuario usr : UsuarioRepository.retornarTodos()) {
+        List<Usuario> usuarios = usuarioRepositorio.retornarTodos();
+
+        for (Usuario usr : usuarios) {
             stringUsuarios = stringUsuarios.concat(usr.toString());
             stringUsuarios = stringUsuarios.concat(",\n");
         }
@@ -69,8 +74,8 @@ public class UsuarioService {
         System.out.println(stringUsuarios);
     }
 
-    public static void removePorLogin(String login) {
-        UsuarioRepository.removePorLogin(login);
+    public void removePorLogin(String login) {
+        usuarioRepositorio.removePorLogin(login);
     }
 
 }

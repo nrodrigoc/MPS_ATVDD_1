@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  postgresdb:
+    image: postgres:13.1-alpine
+    volumes:
+      - /docker_volumes/postgres_validator:/var/lib/postgres
+    restart: always
+    environment:
+      POSTGRES_DB: mps
+      POSTGRES_USER: mps_usr
+      POSTGRES_PASSWORD: mps_pss
+      PG_DATA: /var/lib/postgres
+    ports:
+      - 5432:5432

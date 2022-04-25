@@ -1,6 +1,9 @@
-package br.leitor.entity;
+package br.leitor.domain;
 
 public class Usuario {
+
+    public static final int PAYTAL = 0;
+    public static final int EMISSOR = 1;
 
     private long codigo;
 
@@ -9,6 +12,16 @@ public class Usuario {
     private String senha;
 
     private int tipo;
+
+    public Usuario() {
+    }
+
+    public Usuario(long codigo, String login, String senha, int tipo) {
+        this.codigo = codigo;
+        this.login = login;
+        this.senha = senha;
+        this.tipo = tipo;
+    }
 
     public long getCodigo() {
         return codigo;
