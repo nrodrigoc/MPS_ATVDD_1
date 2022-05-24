@@ -43,13 +43,6 @@ public class AcessoUsuarioRepositorioDatabase implements AcessoUsuarioRepositori
     }
 
     @Override
-    public AcessoUsuario editarAcessoUsuario(long codigo, AcessoUsuario acessoUsuario) {
-        String query = "UPDATE T_USERACCESS tua where tua.codigo = "+ codigo +";";
-        ResultSet resultSet = executeQuery(query);
-        return parseResultSetToUserAccess(resultSet);
-    }
-
-    @Override
     public void removePorCodigo(long codigo) {
         String query = "DELETE FROM T_USERACCESS tua where tua.codigo = "+ codigo;
         ResultSet resultSet = executeQuery(query);

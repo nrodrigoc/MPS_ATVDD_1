@@ -1,6 +1,7 @@
 package br.leitor.application.service;
 
 
+import br.leitor.application.service.factory.LoginServiceFactoryImpl;
 import br.leitor.domain.Usuario;
 import br.leitor.infrastructure.repository.UsuarioRepositorio;
 
@@ -9,9 +10,11 @@ import java.util.List;
 public class UsuarioServiceImpl implements UsuarioService{
 
     private final UsuarioRepositorio usuarioRepositorio;
+    private final LoginService loginService;
 
     public UsuarioServiceImpl(UsuarioRepositorio usuarioRepositorio) {
         this.usuarioRepositorio = usuarioRepositorio;
+        this.loginService = new LoginServiceFactoryImpl().criaLoginService();
     }
 
     public Usuario cadastrarUsuario(String login, String senha, int tipoUsuario) throws Exception {
@@ -76,6 +79,13 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     public void removePorLogin(String login) {
         usuarioRepositorio.removePorLogin(login);
+    }
+
+    public void logar(Usuario usuario) throws RuntimeException{
+        if (loginService.login(usuario))
+            System.out.println("Usuário " + usuario.getLogin() + " logado com sucesso!");
+        else
+            throw new RuntimeException("Não foi possível fazer login com o usuário " + usuario.getLogin() + "!");
     }
 
 }

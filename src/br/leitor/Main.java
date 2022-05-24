@@ -1,5 +1,7 @@
 package br.leitor;
 
+import br.leitor.domain.Administrador;
+import br.leitor.domain.AdministradorAdapter;
 import br.leitor.domain.Usuario;
 import br.leitor.application.service.UsuarioServiceImpl;
 import br.leitor.infrastructure.repository.UsuarioRepositorioMemoria;
@@ -10,7 +12,7 @@ public class Main {
         UsuarioServiceImpl usuarioService = new UsuarioServiceImpl(new UsuarioRepositorioMemoria());
 
         // As informações são de cadastro de usuário são passadas via parâmetro
-        usuarioService.cadastrarUsuario("riachuelo", "senha123", Usuario.EMISSOR);
+        Usuario usuarioRiachuelo = usuarioService.cadastrarUsuario("riachuelo", "senha123", Usuario.EMISSOR);
         usuarioService.cadastrarUsuario("admin", "admin123", Usuario.PAYTAL);
 
         // Imprime todos os usuarios
@@ -21,5 +23,14 @@ public class Main {
 
         // Imprime novamente todos os usuarios;
         usuarioService.imprimirTodos();
+
+
+        // Demonstração do Adapter
+        Administrador administrador = new Administrador(1, "admin-1", "token-de-aceso-123");
+
+        usuarioService.logar(usuarioRiachuelo);
+
+        usuarioService.logar(new AdministradorAdapter(administrador));
+
     }
 }
