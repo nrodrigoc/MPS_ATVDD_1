@@ -88,4 +88,8 @@ public class UsuarioServiceImpl implements UsuarioService{
             throw new RuntimeException("Não foi possível fazer login com o usuário " + usuario.getLogin() + "!");
     }
 
+    public void deslogar() {
+        loginService.loggout();
+    }
+
 }

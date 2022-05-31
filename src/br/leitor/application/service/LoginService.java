@@ -5,4 +5,6 @@ import br.leitor.domain.Usuario;
 public interface LoginService {
 
     boolean login(Usuario usuario);
+
+    boolean loggout();
 }
