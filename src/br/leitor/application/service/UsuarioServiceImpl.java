@@ -81,6 +81,11 @@ public class UsuarioServiceImpl implements UsuarioService{
         usuarioRepositorio.removePorLogin(login);
     }
 
+    @Override
+    public List<Usuario> getAll() {
+        return usuarioRepositorio.retornarTodos();
+    }
+
     public void logar(Usuario usuario) throws RuntimeException{
         if (loginService.login(usuario))
             System.out.println("Usuário " + usuario.getLogin() + " logado com sucesso!");

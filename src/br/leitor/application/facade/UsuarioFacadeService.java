@@ -2,8 +2,7 @@ package br.leitor.application.facade;
 
 import br.leitor.application.presentation.Relatorio;
 import br.leitor.application.presentation.UsuarioPresentation;
-import br.leitor.application.service.AcessoUsuarioService;
-import br.leitor.application.service.UsuarioService;
+import br.leitor.application.service.*;
 import br.leitor.application.service.factory.AcessoUsuarioServiceFactoryImpl;
 import br.leitor.application.service.factory.UsuarioServiceFactoryImpl;
 import br.leitor.domain.AcessoUsuario;
@@ -18,10 +17,14 @@ public class UsuarioFacadeService {
 
     private final AcessoUsuarioService acessoUsuarioService;
     private final UsuarioService usuarioService;
+    private final RelatorioPDFService relatorioPDFService;
+    private final RelatorioCSVService relatorioCSVService;
 
     private UsuarioFacadeService() {
         this.acessoUsuarioService = new AcessoUsuarioServiceFactoryImpl().criarAcessoUsuarioService();
         this.usuarioService = new UsuarioServiceFactoryImpl().criarUsuarioService();
+        this.relatorioPDFService = new RelatorioPDFService(usuarioService.getAll());
+        this.relatorioCSVService = new RelatorioCSVService(usuarioService.getAll());
     }
 
     public static UsuarioFacadeService getInstance() {
@@ -36,8 +39,12 @@ public class UsuarioFacadeService {
         return montarPresentation(usuario, acessoUsuarios);
     }
 
-    public Relatorio gerarRelatorio(){
-        return new Relatorio();
+    public void gerarRelatorioPDF(){
+        relatorioPDFService.imprimirRelatorio();
+    }
+
+    public void gerarRelatorioCSV(){
+        relatorioCSVService.imprimirRelatorio();
     }
 
     private UsuarioPresentation montarPresentation(Usuario user, List<AcessoUsuario> acessoUsuarioList){

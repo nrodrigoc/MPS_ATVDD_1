@@ -1,5 +1,6 @@
 package br.leitor;
 
+import br.leitor.application.facade.UsuarioFacadeService;
 import br.leitor.domain.Administrador;
 import br.leitor.domain.AdministradorAdapter;
 import br.leitor.domain.Usuario;
@@ -9,6 +10,7 @@ import br.leitor.infrastructure.repository.UsuarioRepositorioMemoria;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        UsuarioFacadeService facade = UsuarioFacadeService.getInstance();
         UsuarioServiceImpl usuarioService = new UsuarioServiceImpl(new UsuarioRepositorioMemoria());
 
         // As informações são de cadastro de usuário são passadas via parâmetro
@@ -31,6 +33,9 @@ public class Main {
         usuarioService.logar(usuarioRiachuelo);
 
         usuarioService.logar(new AdministradorAdapter(administrador));
+
+        // Demonstração do singleton e do template
+        facade.gerarRelatorioPDF();
 
     }
 }
